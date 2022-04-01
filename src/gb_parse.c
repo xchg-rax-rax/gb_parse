@@ -666,6 +666,149 @@ int main(int argc, char**argv) {
                 printf("Unknown\n");
         }
     }
+    printf("SBG Flag:\t\t");
+    switch (header->sgb_flag) {
+        case SGB_ON:
+            printf("On\n");
+            break;
+        case SGB_OFF:
+            printf("Off\n");
+            break;
+        default:
+            printf("Unknown\n");
+    }
+   
+    printf("Cartridge Type:\t\t");
+    switch (header->cartridge_type) {
+        case CARTRIDGE_ROM_ONLY:
+            printf("ROM Only\n");
+            break;
+        case CARTRIDGE_MBC1:
+            printf("MBC1\n");
+            break;
+        case CARTRIDGE_MBC1_RAM:
+            printf("MBC1 + RAM\n");
+            break;
+        case CARTRIDGE_MBC1_RAM_BATTERY:
+            printf("MBC1 + RAM + Battery\n");
+            break;
+        case CARTRIDGE_MBC2:
+            printf("MBC2\n");
+            break;
+        case CARTRIDGE_MBC2_RAM:
+            printf("MBC2 + RAM\n");
+            break;
+        case CARTRIDGE_ROM_RAM:
+            printf("ROM + RAM\n");
+            break;
+        case CARTRIDGE_ROM_RAM_BATTERY:
+            printf("ROM + RAM + Battery\n");
+            break;
+        case CARTRIDGE_MM01:
+            printf("MM01\n");
+            break;
+        case CARTRIDGE_MM01_RAM:
+            printf("MM01 + RAM\n");
+            break;
+        case CARTRIDGE_MM01_RAM_BATTERY:
+            printf("MM01 + RAM + Battery\n");
+            break;
+        case CARTRIDGE_MBC3_TIMER_BATTERY:
+            printf("MBC3 + Timer + Battery\n");
+            break;
+        case CARTRIDGE_MBC3_TIMER_BATTERY_RAM:
+            printf("MBC3 + Timer + Battery + RAM\n");
+            break;
+        case CARTRIDGE_MBC3:
+            printf("MBC3\n");
+            break;
+        case CARTRIDGE_MBC3_RAM:
+            printf("MBC3 + RAM\n");
+            break;
+        case CARTRIDGE_MBC3_RAM_BATTERY:
+            printf("MBC3 + RAM + Battery\n");
+            break;
+        case CARTRIDGE_MBC5:
+            printf("MBC5\n");
+            break;
+        case CARTRIDGE_MBC5_RAM:
+            printf("MBC5 + RAM\n");
+            break;
+        case CARTRIDGE_MBC5_RAM_BATTERY:
+            printf("MBC5 + RAM + Battery\n");
+            break;
+        case CARTRIDGE_MBC5_RUMBLE:
+            printf("MBC5 + Rumble\n");
+            break;
+        case CARTRIDGE_MBC5_RUMBLE_RAM:
+            printf("MBC5 + Rumble + RAM\n");
+            break;
+        case CARTRIDGE_MBC5_RUMBLE_RAM_BATTERY:
+            printf("MBC5 + Rumble + RAM + Battery\n");
+            break;
+        case CARTRIDGE_MBC6:
+            printf("MBC6\n");
+            break;
+        case CARTRIDGE_MBC7_SENSOR_RUMBLE_RAM_BATTERY:
+            printf("MBC7 + Sensor + Rumble + RAM + Battery\n");
+            break;
+        case CARTRIDGE_POCKET_CAMERA:
+            printf("Pocket Camera\n");
+            break;
+        case CARTRIDGE_BANDAI_TAMA5:
+            printf("Bandai TAMA5\n");
+            break;
+        case CARTRIDGE_HUC3:
+            printf("HUC3\n");
+            break;
+        case CARTRIDGE_HUC1_RAM_BATTERY:
+            printf("HUC1 + RAM + Battery\n");
+            break;
+        default:
+            printf("Unknown\n");
+    }
+    
+    printf("ROM Size:\t\t");
+    switch(header->rom_size_code) {
+        case ROM_SIZE_32KB:
+            printf("32KB\n");
+            break;
+        case ROM_SIZE_64KB:
+            printf("64KB\n");
+            break;
+        case ROM_SIZE_128KB:
+            printf("128KB\n");
+            break;
+        case ROM_SIZE_256KB:
+            printf("256KB\n");
+            break;
+        case ROM_SIZE_512KB:
+            printf("512KB\n");
+            break;
+        case ROM_SIZE_1MB:
+            printf("1MB\n");
+            break;
+        case ROM_SIZE_2MB:
+            printf("2MB\n");
+            break;
+        case ROM_SIZE_4MB:
+            printf("4MB\n");
+            break;
+        case ROM_SIZE_8MB:
+            printf("8MB\n");
+            break;
+        case ROM_SIZE_1_1MB:
+            printf("1.1MB\n");
+            break;
+        case ROM_SIZE_1_2MB:
+            printf("1.2MB\n");
+            break;
+        case ROM_SIZE_1_5MB:
+            printf("1.5MB\n");
+            break;
+        default:
+            printf("Unknown\n");
+    }
 
     printf("RAM Size:\t\t");
     switch(header->ram_size_code) {
@@ -703,7 +846,6 @@ int main(int argc, char**argv) {
     printf("Mask ROM Version:\t0x%x\n", header->mask_rom_version_number);
     printf("Header Checksum:\t0x%x\n", header->header_checksum);
     printf("Global Checksum:\t0x%x\n", header->global_checksum);
-
     
     return EXIT_SUCCESS;
 }
