@@ -18,7 +18,7 @@ uint8_t compute_header_checksum(gb_rom_header* header) {
     return x;
 }
 
-// kay so the 2 byte new licensee code are fucking batshit
+// so the 2 byte new licensee code are crazy
 // this fixes them and makes them line up with all the docs
 // no idea who to blame for this particular fuckery 
 uint8_t trasnlate_new_licensee_code(uint16_t raw_new_licensee_code) {
