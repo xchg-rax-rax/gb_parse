@@ -8,8 +8,6 @@
 
 #include "gb_rom_header.h"
 
-// function that the bootstrap rom uses to compute the header checksum
-// weird pseudo code so likely wrong
 uint8_t compute_header_checksum(gb_rom_header* header) {
     uint8_t x = 0;
     for (int i = 0x34; i < 0x4C; i++) {
@@ -18,9 +16,6 @@ uint8_t compute_header_checksum(gb_rom_header* header) {
     return x;
 }
 
-// so the 2 byte new licensee code are crazy
-// this fixes them and makes them line up with all the docs
-// no idea who to blame for this particular fuckery 
 uint8_t trasnlate_new_licensee_code(uint16_t raw_new_licensee_code) {
     return ((raw_new_licensee_code & 0x0F) << 4) + ((raw_new_licensee_code & 0x0F00) >> 8);
 }
@@ -31,26 +26,24 @@ int main(int argc, char**argv) {
         return EXIT_FAILURE;
     }
 
-    // open file
     int fd = open(argv[1], O_RDONLY);
     if (fd == -1) {
         printf("[!] Could not open file: %s\n", argv[0]);
         return EXIT_FAILURE;
     }
     
-    // memory map file
     gb_rom_header* header =  (gb_rom_header*) (mmap(0,0x50,PROT_READ, MAP_PRIVATE, fd, 0) + GB_HEADER_BASE_OFFSET);
     if (header == MAP_FAILED) {
         int error = errno;
         printf("[!] Could not map file into memory: %s\n", strerror(error));
         return EXIT_FAILURE;
     }    
-    // print vanity banner OwO
+    
     printf("\033[0;31m  ▄████  ▄▄▄▄       ██▓███   ▄▄▄       ██▀███    ██████ ▓█████ \n ██▒ ▀█▒▓█████▄    ▓██░  ██▒▒████▄    ▓██ ▒ ██▒▒██    ▒ ▓█   ▀ \n▒██░▄▄▄░▒██▒ ▄██   ▓██░ ██▓▒▒██  ▀█▄  ▓██ ░▄█ ▒░ ▓██▄   ▒███   \n░▓█  ██▓▒██░█▀     ▒██▄█▓▒ ▒░██▄▄▄▄██ ▒██▀▀█▄    ▒   ██▒▒▓█  ▄ \n░▒▓███▀▒░▓█  ▀█▓   ▒██▒ ░  ░ ▓█   ▓██▒░██▓ ▒██▒▒██████▒▒░▒████▒\n ░▒   ▒ ░▒▓███▀▒   ▒▓▒░ ░  ░ ▒▒   ▓▒█░░ ▒▓ ░▒▓░▒ ▒▓▒ ▒ ░░░ ▒░ ░\n  ░   ░ ▒░▒   ░    ░▒ ░       ▒   ▒▒ ░  ░▒ ░ ▒░░ ░▒  ░ ░ ░ ░  ░\n░ ░   ░  ░    ░    ░░         ░   ▒     ░░   ░ ░  ░  ░     ░   \n      ░  ░                        ░  ░   ░           ░     ░  ░\n              ░                                                \n\033[0;36m");  
     
     printf("Hell of simulation, which is no longer one of torture, but of subtle, maleficent, \nelusive twisting of meaning... ― Jean Baudrillard, Simulacra and Simulation\n\n");
 
-    // check if new or old cartridge format
+    
     uint8_t new_catridge = (USE_NEW_LICENSEE_CODE == header->old_licensee_code);
 
     char game_title[17];
@@ -67,7 +60,6 @@ int main(int argc, char**argv) {
 
     printf("Entry Point:\t\t0x%04x\n", header->entry_point_addr);
 
-    // display nintendo logo bytes and simultaneous verify them
     printf("Nintendo Logo:\t\t");
     uint8_t correct_bytes = 0;
     for (uint8_t i = 0; i < 0x30; i++) {
